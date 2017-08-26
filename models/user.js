@@ -5,5 +5,6 @@ module.exports = mongoose.model('User', new Schema({
 	email: String,
 	password: String,
 	username: String,
-	admin: Boolean
+	admin: Boolean,
+    joined: { type: Date, default: Date.now }
 }))
