@@ -6,6 +6,13 @@ const config = require('../config')
 
 const saltRounds = 10
 
+const createToken = ({user, password}) =>
+    jwt.sign(
+        {user, password},
+        config.server_secret,
+        { expiresIn : 60*60*24*30 }
+    )
+
 const createUser = (req, res) => {
 	const user = new User({
 		username: req.body.username,
@@ -18,7 +25,7 @@ const createUser = (req, res) => {
 		if (err) throw err
         res.status(200).json({
             success: true,
-            token: token,
+            token: createToken({ user: user.username, password: user.password}),
             username: user.username,
             joined: user.joined
         })
@@ -68,17 +75,8 @@ const authenticateUser = (req, res) => {
                     })
   			} else {
   				// if user is found and password is right
-  				const token = jwt.sign(
-                    {
-                        user: user.username,
-                        password: user.password
-                    },
-                    config.server_secret,
-                    {
-	                    expiresIn : 60*60*24*30 // expires in 24 hours * 30 days
-		            }
-                )
-  				res.status(200).json({
+  				const token = createToken({ user: user.username, password: user.password})
+  				res.json({
   					token: token,
                     username: user.username,
                     joined: user.joined
