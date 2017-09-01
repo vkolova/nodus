@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 app.post('/sign-up', (req, res) => userAPI.createUser(req, res))
 app.post('/sign-in', (req, res) => userAPI.authenticateUser(req, res))
 app.get('/users', (req, res) => userAPI.getUsers(req, res))
+app.put('/profile', (req, res) => userAPI.updateProfile(req, res))
 // app.get('/user', (req, res) => userAPI.getUser(req, res))
 
 app.listen(process.env.PORT || 3001, () => {

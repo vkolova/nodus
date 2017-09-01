@@ -17,8 +17,7 @@ const createUser = (req, res) => {
 	const user = new User({
 		username: req.body.username,
         password: bcrypt.hashSync(req.body.password, saltRounds),
-		email: req.body.email,
-		admin: false
+		email: req.body.email
 	})
 
 	user.save(err => {
@@ -27,6 +26,8 @@ const createUser = (req, res) => {
             success: true,
             token: createToken({ user: user.username, password: user.password}),
             username: user.username,
+            avatar: '',
+            email: user.email,
             joined: user.joined
         })
 	})
@@ -77,19 +78,38 @@ const authenticateUser = (req, res) => {
   				// if user is found and password is right
   				const token = createToken({ user: user.username, password: user.password})
   				res.json({
-  					token: token,
+                    token: token,
                     username: user.username,
-                    joined: user.joined
-  				})
+                    avatar: user.avatar,
+                    admin: user.admin,
+                    email: user.email
+                })
   			}
   		}
   	})
 }
 
 
+const updateProfile = (req, res) => {
+  	User.findOne({
+  		email: req.body.email
+  	}, (err, user) => {
+  		if (err) throw err
+        user.email = req.body.newEmail
+        user.avatar = req.body.avatar
+        user.save()
+    
+        res.json({
+            avatar: user.avatar,
+            email: user.email
+        })
+  	})
+}
+
 module.exports = {
     createUser,
     getUsers,
     verifyUser,
-    authenticateUser
+    authenticateUser,
+    updateProfile
 }
