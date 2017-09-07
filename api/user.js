@@ -98,7 +98,7 @@ const updateProfile = (req, res) => {
         user.email = req.body.newEmail
         user.avatar = req.body.avatar
         user.save()
-    
+
         res.json({
             avatar: user.avatar,
             email: user.email
