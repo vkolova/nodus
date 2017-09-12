@@ -95,7 +95,7 @@ const updateProfile = (req, res) => {
   		email: req.body.email
   	}, (err, user) => {
   		if (err) throw err
-        user.email = req.body.newEmail
+        user.email = req.body.newEmail || user.email
         user.avatar = req.body.avatar
         user.save()
 
