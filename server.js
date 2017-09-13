@@ -12,6 +12,7 @@ const saltRounds = 10
 
 const userAPI = require('./api/user')
 const subscriptionAPI = require('./api/subscription')
+const updateAPI = require('./api/update')
 
 mongoose.Promise = global.Promise
 mongoose.connect(config.database, {useMongoClient: true})
@@ -45,6 +46,8 @@ app.put('/profile', userAPI.verifyUser, (req, res) => userAPI.updateProfile(req,
 // app.get('/user', (req, res) => userAPI.getUser(req, res))
 
 app.post('/subscribe', userAPI.verifyUser, (req, res) => subscriptionAPI.subscribe(req, res))
+
+app.get('/update', (req, res) => updateAPI.getUpdates(req, res))
 
 app.listen(process.env.PORT || 3001, () => {
 	console.log(`Started on ${process.env.PORT || 3001}`)

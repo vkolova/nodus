@@ -1,7 +1,6 @@
 const Subscription = require('../models/subscription')
 const User = require('../models/user')
 
-const config = require('../config')
 
 const subscribe = (req, res) => {
 	User.findOne({
