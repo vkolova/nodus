@@ -6,9 +6,9 @@ const config = require('../config')
 
 const saltRounds = 10
 
-const createToken = ({user, password}) =>
+const createToken = ({email, password}) =>
     jwt.sign(
-        {user, password},
+        {email, password},
         config.server_secret,
         { expiresIn : 60*60*24*30 }
     )
@@ -24,7 +24,7 @@ const createUser = (req, res) => {
 		if (err) throw err
         res.status(200).json({
             success: true,
-            token: createToken({ user: user.username, password: user.password}),
+            token: createToken({ email: user.email, password: user.password}),
             username: user.username,
             avatar: '',
             email: user.email,
@@ -46,7 +46,7 @@ const verifyUser = (req, res, next) => {
             if (err) {
                 return res.json({ success: false, message: 'Failed to authenticate token.' })
             } else {
-                req.decoded = decoded
+                req.user = decoded
                 next()
             }
         })
@@ -76,7 +76,7 @@ const authenticateUser = (req, res) => {
                     })
   			} else {
   				// if user is found and password is right
-  				const token = createToken({ user: user.username, password: user.password})
+  				const token = createToken({ email: user.email, password: user.password})
   				res.json({
                     token: token,
                     username: user.username,
@@ -92,11 +92,11 @@ const authenticateUser = (req, res) => {
 
 const updateProfile = (req, res) => {
   	User.findOne({
-  		email: req.body.email
+  		email: req.user.email
   	}, (err, user) => {
   		if (err) throw err
-        user.email = req.body.newEmail || user.email
-        user.avatar = req.body.avatar
+        user.email = req.body.email || user.email
+        user.avatar = req.body.avatar || user.avatar
         user.save()
 
         res.json({
