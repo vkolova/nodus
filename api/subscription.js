@@ -8,8 +8,9 @@ const subscribe = (req, res) => {
   	}, (err, user) => {
   		if (err) throw err
 		const subscription = new Subscription({
-			user: user._id,
-		    show: req.body.show,
+			userId: user._id,
+		    showName: req.body.showName,
+			showId: req.body.showId,
 			season: req.body.notWatched ? 0 : req.body.season,
 			episode: req.body.notWatched ? 0 : req.body.episode
 		})
