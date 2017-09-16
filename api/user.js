@@ -59,34 +59,34 @@ const verifyUser = (req, res, next) => {
 }
 
 const authenticateUser = (req, res) => {
-  	User.findOne({
-  		email: req.body.email
-  	}, (err, user) => {
-  		if (err) throw err
+  User.findOne({
+    email: req.body.email
+  }, (err, user) => {
+    if (err) throw err
 
-  		if (!user) {
-  			return res.status(401).json({
-                    message: 'Authentication failed. Incorrect user or password.'
-                })
-  		} else if (user) {
-  			// check if password matches
-            if (!bcrypt.compareSync(req.body.password, user.password)) {
-  				return res.status(401).json({
-                        message: 'Authentication failed. Incorrect user or password.'
-                    })
-  			} else {
-  				// if user is found and password is right
-  				const token = createToken({ email: user.email, password: user.password})
-  				res.json({
-                    token: token,
-                    username: user.username,
-                    avatar: user.avatar,
-                    admin: user.admin,
-                    email: user.email
-                })
-  			}
-  		}
-  	})
+    if (!user) {
+      return res.status(401).json({
+        message: 'Authentication failed. Incorrect user or password.'
+      })
+    } else if (user) {
+      // check if password matches
+      if (!bcrypt.compareSync(req.body.password, user.password)) {
+        return res.status(401).json({
+          message: 'Authentication failed. Incorrect user or password.'
+        })
+      } else {
+        // if user is found and password is right
+        const token = createToken({ email: user.email, password: user.password})
+        res.json({
+          token: token,
+          username: user.username,
+          avatar: user.avatar,
+          admin: user.admin,
+          email: user.email
+        })
+      }
+    }
+  })
 }
 
 
@@ -95,15 +95,29 @@ const updateProfile = (req, res) => {
   		email: req.user.email
   	}, (err, user) => {
   		if (err) throw err
-        user.email = req.body.email || user.email
-        user.avatar = req.body.avatar || user.avatar
-        user.save()
+      user.email = req.body.email || user.email
+      user.avatar = req.body.avatar || user.avatar
+      user.save()
 
-        res.json({
-            avatar: user.avatar,
-            email: user.email
-        })
+      res.json({
+          avatar: user.avatar,
+          email: user.email
+      })
   	})
+}
+
+const getUserProfilePageInfo = (req, res) => {
+  User.findOne({
+    username: req.query.username
+  }, (err, user) => {
+    if (err) throw err
+
+    res.json({
+      username: user.username,
+      avatar: user.avatar,
+      joined: user.joined
+    })
+  })
 }
 
 module.exports = {
@@ -111,5 +125,6 @@ module.exports = {
     getUsers,
     verifyUser,
     authenticateUser,
-    updateProfile
+    updateProfile,
+    getUserProfilePageInfo
 }

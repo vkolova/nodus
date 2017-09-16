@@ -43,6 +43,7 @@ app.post('/sign-in', (req, res) => userAPI.authenticateUser(req, res))
 
 app.get('/users', userAPI.verifyUser, (req, res) => userAPI.getUsers(req, res))
 app.put('/profile', userAPI.verifyUser, (req, res) => userAPI.updateProfile(req, res))
+app.get('/profile', userAPI.verifyUser, (req, res) => userAPI.getUserProfilePageInfo(req, res))
 // app.get('/user', (req, res) => userAPI.getUser(req, res))
 
 app.post('/subscribe', userAPI.verifyUser, (req, res) => subscriptionAPI.subscribe(req, res))
