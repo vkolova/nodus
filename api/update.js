@@ -11,8 +11,8 @@ torrentSearch.enableProvider('Torrent9')
 
 const getSearch = s =>
 	torrentSearch.search(getSearchQuery(s), 'TV', 1)
-	.then(torrents => torrents)
-	.catch(err => console.log(err))
+		.then(torrents => torrents)
+		.catch(err => console.log(err))
 
 const getUpdates = (req, res) => {
 	User.findOne({ 'email': req.user.email })
@@ -26,9 +26,8 @@ const getUpdates = (req, res) => {
 
 					const data = await Promise.all(subs.map(getSearch))
 					res.json(...data)
-
 				})
-	})
+		})
 }
 
 module.exports = {
