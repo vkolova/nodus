@@ -11,8 +11,8 @@ const subscribe = (req, res) => {
 			userId: user._id,
 			showName: req.body.showName,
 			showId: req.body.showId,
-			season: req.body.notWatched ? 0 : req.body.season,
-			episode: req.body.notWatched ? 0 : req.body.episode
+			season: req.body.notWatched ? 1 : req.body.season,
+			episode: req.body.notWatched ? 1 : req.body.episode
 		})
 
 		subscription.save(err => {
