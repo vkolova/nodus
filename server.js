@@ -21,14 +21,6 @@ mongoose.Promise = global.Promise
 mongoose.connect(config.database, {useMongoClient: true})
 
 const app = express()
-// const server = require('http').Server(app)
-// const io = require('socket.io')(server)
-//
-// server.listen(80)
-//
-// io.on('connection', function (socket) {
-//     socket.send('hi')
-// })
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -53,6 +45,7 @@ app.get('/update', userAPI.verifyUser, (req, res) => updateAPI.getUpdates(req, r
 app.put('/episode', userAPI.verifyUser, (req, res) => episodeAPI.markEpisodeAsWatched(req, res))
 app.post('/event', userAPI.verifyUser, (req, res) => eventLogAPI.LogEvent(req, res))
 app.post('/favorite', userAPI.verifyUser, (req, res) => showAPI.favorite(req, res))
+app.get('/favorites', userAPI.verifyUser, (req, res) => userAPI.getFavorites(req, res))
 
 
 app.listen(process.env.PORT || 3001, () => {

@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
+const Favorite = require('../models/favorite')
 const config = require('../config')
 
 const saltRounds = 10
@@ -120,11 +121,27 @@ const getUserProfilePageInfo = (req, res) => {
   })
 }
 
+const getFavorites = (req, res) => {
+  User.findOne({
+    username: req.query.username
+  }, (err, user) => {
+    if (err) throw err
+    Favorite.find({})
+      .where('userId').equals(user._id)
+      .exec(async (err, favorites) => {
+        if (err) throw err
+
+        res.status(200).json(favorites)
+      })
+  })
+}
+
 module.exports = {
     createUser,
     getUsers,
     verifyUser,
     authenticateUser,
     updateProfile,
-    getUserProfilePageInfo
+    getUserProfilePageInfo,
+    getFavorites
 }

@@ -1,5 +1,6 @@
 const WatchedEpisode = require('../models/episode')
 const ShowEvent = require('../models/event')
+const User = require('../models/user')
 
 const LogEvent = (req, res) => {
   User.findOne({
@@ -13,7 +14,7 @@ const LogEvent = (req, res) => {
       event: req.body.event
     })
 
-    eevent.save(err => {
+    event.save(err => {
       if (err) throw err
       res.status(200).json({
         success: true
