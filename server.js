@@ -14,6 +14,8 @@ const userAPI = require('./api/user')
 const subscriptionAPI = require('./api/subscription')
 const updateAPI = require('./api/update')
 const episodeAPI = require('./api/episode')
+const eventLogAPI = require('./api/event')
+const showAPI = require('./api/show')
 
 mongoose.Promise = global.Promise
 mongoose.connect(config.database, {useMongoClient: true})
@@ -46,12 +48,11 @@ app.get('/users', userAPI.verifyUser, (req, res) => userAPI.getUsers(req, res))
 app.put('/profile', userAPI.verifyUser, (req, res) => userAPI.updateProfile(req, res))
 app.get('/profile', userAPI.verifyUser, (req, res) => userAPI.getUserProfilePageInfo(req, res))
 // app.get('/user', (req, res) => userAPI.getUser(req, res))
-
 app.post('/subscribe', userAPI.verifyUser, (req, res) => subscriptionAPI.subscribe(req, res))
-
 app.get('/update', userAPI.verifyUser, (req, res) => updateAPI.getUpdates(req, res))
-
 app.put('/episode', userAPI.verifyUser, (req, res) => episodeAPI.markEpisodeAsWatched(req, res))
+app.post('/event', userAPI.verifyUser, (req, res) => eventLogAPI.LogEvent(req, res))
+app.post('/favorite', userAPI.verifyUser, (req, res) => showAPI.favorite(req, res))
 
 
 app.listen(process.env.PORT || 3001, () => {
