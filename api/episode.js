@@ -9,6 +9,7 @@ const markEpisodeAsWatched = (req, res) => {
 
     const episode = new WatchedEpisode({
       userId: user._id,
+      showId: req.body.show,
       episodeId: req.body.episode,
       dateWatched: req.body.date
     })
