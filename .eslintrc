@@ -1,0 +1,20 @@
+{
+	"extends": "airbnb-base",
+	"parserOptions": {
+	  "sourceType": "module"
+	},
+	"env": {
+	  "node": true
+	},
+	"plugins": [],
+	"rules": {
+	  "indent": ["error", "tab"],
+	  "linebreak-style": ["error", "unix"],
+	  "quotes": ["error", "single"],
+	  "semi": ["error", "never"],
+	  "no-console": 0,
+	  "func-names": "off",
+	  "no-tabs": "off",
+	  "import/no-unresolved": "off"
+	}
+  }
