@@ -1,15 +1,12 @@
 const bodyParser = require('body-parser')
 const express = require('express')
-const jwt = require('jsonwebtoken')
-
 const mongoose = require('mongoose')
 const config = require('./config')
-const User = require('./models/user')
+// const jwt = require('jsonwebtoken')
+// const User = require('./models/user')
+// const bcrypt = require('bcrypt')
 
-
-const bcrypt = require('bcrypt')
-const saltRounds = 10
-
+// const saltRounds = 10
 const userAPI = require('./api/user')
 const subscriptionAPI = require('./api/subscription')
 const updateAPI = require('./api/update')
@@ -18,7 +15,7 @@ const eventLogAPI = require('./api/event')
 const showAPI = require('./api/show')
 
 mongoose.Promise = global.Promise
-mongoose.connect(config.database, {useMongoClient: true})
+mongoose.connect(config.database, { useMongoClient: true })
 
 const app = express()
 
