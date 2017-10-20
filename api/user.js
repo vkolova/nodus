@@ -36,6 +36,7 @@ const createUser = (req, res) => {
 
 const getUsers = (req, res) => {
   User.find({}, (err, users) => {
+    console.log(users);
     res.json(users)
   })
 }
