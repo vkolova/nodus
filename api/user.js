@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
 const Favorite = require('../models/favorite')
+const Episode = require('../models/episode')
+const ShowEvent = require('../models/event')
 const config = require('../config')
 
 const saltRounds = 10
@@ -112,12 +114,25 @@ const getUserProfilePageInfo = (req, res) => {
     username: req.query.username
   }, (err, user) => {
     if (err) throw err
+    Episode.find({})
+      .where('userId').equals(user._id)
+      .where('dateWatched').ne(null)
+      .exec(async (err, watched) => {
+        if (err) throw err
+        ShowEvent.find({})
+        .where('userId').equals(user._id)
+        .exec(async (err, activity) => {
+          if (err) throw err
 
-    res.json({
-      username: user.username,
-      avatar: user.avatar,
-      joined: user.joined
-    })
+          res.json({
+            username: user.username,
+            avatar: user.avatar,
+            joined: user.joined,
+            activity,
+            watched
+          })
+        })
+      })
   })
 }
 
