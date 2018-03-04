@@ -14,15 +14,16 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "jsonwebtoken": "^7.4.1",
-    "mongodb": "^2.2.28",
-    "mongoose": "^4.11.6",
-    "torrent-search-api": "^1.0.16"
+    "jsonwebtoken": "^8.2.0",
+    "mongodb": "^3.0.3",
+    "mongoose": "^5.0.8",
+    "torrent-search-api": "^1.0.16",
+    "tpb-api": "^1.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
-    "babel-loader": "^6.3.2",
+    "babel-loader": "^7.1.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",

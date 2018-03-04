@@ -1,4 +1,6 @@
-const TorrentSearchApi = require('torrent-search-api')
+// const TorrentSearchApi = require('torrent-search-api')
+const TPB = require('tpb-api');
+const tpb = new TPB();
 
 const Subscription = require('../models/subscription')
 const User = require('../models/user')
@@ -6,12 +8,12 @@ const User = require('../models/user')
 const getSearchQuery = s =>
 	`${s.showName} S${s.seaso*1 + 1 > 9 ? s.season*1 + 1 : '0' + s.season}E${s.episode*1 + 1 > 9 ? s.episode*1 + 1 : '0' + s.episode}`
 
-const torrentSearch = new TorrentSearchApi()
-torrentSearch.enableProvider('Torrent9')
-
 const getSearch = s =>
-	torrentSearch.search(getSearchQuery(s), 'TV', 1)
-		.then(torrents => torrents)
+	tpb.search(getSearchQuery(s))
+		.then(torrents => {
+      console.log(torrents);
+      return torrents;
+    })
 		.catch(err => console.log(err))
 
 const getUpdates = (req, res) => {
