@@ -117,11 +117,11 @@ const getUserProfilePageInfo = (req, res) => {
     Episode.find({})
       .where('userId').equals(user._id)
       .where('dateWatched').ne(null)
-      .exec(async (err, watched) => {
+      .exec((err, watched) => {
         if (err) throw err
         ShowEvent.find({})
         .where('userId').equals(user._id)
-        .exec(async (err, activity) => {
+        .exec((err, activity) => {
           if (err) throw err
 
           res.json({
@@ -143,7 +143,7 @@ const getFavorites = (req, res) => {
     if (err) throw err
     Favorite.find({})
       .where('userId').equals(user._id)
-      .exec(async (err, favorites) => {
+      .exec((err, favorites) => {
         if (err) throw err
 
         res.status(200).json(favorites)
